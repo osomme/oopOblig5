@@ -1,0 +1,32 @@
+label {
+    -fx-alignment: center;
+}
+
+AnchorPane {
+    -fx-background-color: #333;
+}
+
+.inputField:hover {
+    -fx-background-color: #e6e6e6;
+}
+
+.inputField:focused {
+    -fx-border-width: 3;
+    -fx-border-color: orange;
+}
+
+.btn {
+    -fx-border-color: #ffffff;
+    -fx-background-color: #333;
+    -fx-border-radius: 2;
+    -fx-border-width: 2;
+}
+
+.btn:hover {
+    -fx-background-color: #616161;
+}
+
+.btn:pressed {
+    -fx-pref-height: 10;
+    -fx-border-color: orange;
+}
