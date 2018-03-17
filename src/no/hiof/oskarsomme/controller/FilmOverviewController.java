@@ -44,7 +44,7 @@ public class FilmOverviewController {
 
     @FXML
     private void initialize() {
-        // Edit film attributes (oppgave 9)
+        // Edit film attributes (oppgave 9)aa
         btnEdit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
