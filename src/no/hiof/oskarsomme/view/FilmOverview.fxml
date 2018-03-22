@@ -126,7 +126,19 @@
                </Tab>
              <Tab text="TV Series">
                   <content>
-                     <ListView fx:id="tvSeriesList" prefHeight="200.0" prefWidth="324.0" />
+                     <ListView fx:id="tvSeriesList" prefHeight="200.0" prefWidth="324.0">
+                        <contextMenu>
+                           <ContextMenu>
+                              <items>
+                                 <RadioMenuItem fx:id="contextSortTitleAscTV" mnemonicParsing="false" text="Sort by title (A-Z)" />
+                                 <RadioMenuItem fx:id="contextSortTitleDescTV" mnemonicParsing="false" text="Sort by title (Z-A)" />
+                                 <RadioMenuItem fx:id="contextSortDateAscTV" mnemonicParsing="false" text="Sort ascending releasedate" />
+                                 <RadioMenuItem fx:id="contextSortDateDescTV" mnemonicParsing="false" text="Sort descending releasedate" />
+                                 <RadioMenuItem fx:id="contextSortEpsAscTV" mnemonicParsing="false" text="Sort by number of episodes (Hi-Low)" />
+                                 <RadioMenuItem fx:id="contextSortEpsDescTV" mnemonicParsing="false" text="Sort by number of episodes (Low-Hi)" />
+                              </items>
+                           </ContextMenu>
+                        </contextMenu></ListView>
                   </content></Tab>
            </tabs>
             <GridPane.margin>

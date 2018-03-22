@@ -16,7 +16,9 @@ import no.hiof.oskarsomme.model.windowlauncher.WindowLauncher;
 public class FilmOverviewController {
     @FXML
     private RadioMenuItem contextSortTitleAsc, contextSortTitleDesc, contextSortReleaseAsc,
-            contextSortReleaseDesc, contextSortRuntimeAsc, contextSortRuntimeDesc;
+            contextSortReleaseDesc, contextSortRuntimeAsc, contextSortRuntimeDesc, contextSortTitleAscTV,
+            contextSortTitleDescTV, contextSortDateAscTV, contextSortDateDescTV, contextSortEpsAscTV,
+            contextSortEpsDescTV;
     @FXML
     private Button btnNew, btnEdit, btnDelete;
     @FXML
@@ -33,13 +35,16 @@ public class FilmOverviewController {
     private TextField sortInput;
     @FXML
     private TabPane tabPane;
-    
+
+    private ToggleGroup contextGroupFilm, contextGroupTVSeries;
     private Object currentTarget;
     private ObservableList<Film> films;
     private ObservableList<TVSeries> series;
 
     @FXML
     private void initialize() {
+        setContextMenu();
+
         // Edit film or tv series attributes.
         btnEdit.setOnAction(event -> {
             new WindowLauncher().goToEditDialog(currentTarget);
@@ -61,14 +66,6 @@ public class FilmOverviewController {
 
         // Delete from list.
         btnDelete.setOnAction(event -> deleteFilmOrTVSeries(currentTarget));
-
-        // Handles actions involving context menu over listView.
-        contextSortTitleAsc.setOnAction(event -> sortByTitleAscending());
-        contextSortTitleDesc.setOnAction(event -> sortByTitleDescending());
-        contextSortReleaseAsc.setOnAction(event -> sortByReleaseDateAscending());
-        contextSortReleaseDesc.setOnAction(event -> sortByReleaseDateDescending());
-        contextSortRuntimeAsc.setOnAction(event -> sortByRuntimeAscending());
-        contextSortRuntimeDesc.setOnAction(event -> sortByRuntimeDescending());
 
         // Double clicking on TVSeries opens new episodelist window.
         tvSeriesList.setOnMouseClicked(event -> {
@@ -105,7 +102,7 @@ public class FilmOverviewController {
         // At launch the list is sorted by title (A-Z).
         films = main.getFilms();
         series = main.getTVSeries();
-        sortByTitleAscending();
+        //sortByTitleAscending();
         // Sets info with values of first film in list of films.
         setInfoListing(films.get(0));
         currentTarget = films.get(0);
@@ -150,19 +147,20 @@ public class FilmOverviewController {
         }
     }
 
-    private void setSelectedContextMenu(RadioMenuItem item) {
-        final RadioMenuItem[] RADIO_MENU_ITEMS = {contextSortTitleAsc, contextSortTitleDesc, contextSortReleaseAsc,
+    private void setSelectedContextMenus() {
+        final RadioMenuItem[] RADIO_MENU_ITEMS_FILM = {contextSortTitleAsc, contextSortTitleDesc, contextSortReleaseAsc,
                 contextSortReleaseDesc, contextSortRuntimeAsc, contextSortRuntimeDesc};
 
-        for(RadioMenuItem menuItem : RADIO_MENU_ITEMS) {
-            if(menuItem.getId().equals(item.getId())) {
-                menuItem.setSelected(true);
-            } else {
-                menuItem.setSelected(false);
-            }
+        final RadioMenuItem[] RADIO_MENU_ITEMS_TVSERIES = {contextSortDateAscTV, contextSortDateDescTV, contextSortEpsAscTV,
+                contextSortEpsDescTV, contextSortTitleAscTV, contextSortTitleDescTV};
+
+        for(RadioMenuItem menuItem : RADIO_MENU_ITEMS_FILM) {
+            menuItem.setToggleGroup(contextGroupFilm);
         }
 
-
+        for(RadioMenuItem menuItem : RADIO_MENU_ITEMS_TVSERIES) {
+            menuItem.setToggleGroup(contextGroupTVSeries);
+        }
     }
 
     private void setListCells() {
@@ -217,6 +215,28 @@ public class FilmOverviewController {
                 setText(series.getTitle());
             }
         }
+    }
+
+    private void setContextMenu() {
+        contextGroupFilm = new ToggleGroup();
+        contextGroupTVSeries = new ToggleGroup();
+        setSelectedContextMenus();
+
+        // Handles actions involving context menu over film listview.
+        contextSortTitleAsc.setOnAction(event -> films.sort(Film.sortByTitle));
+        contextSortTitleDesc.setOnAction(event -> films.sort(Film.sortByTitle.reversed()));
+        contextSortReleaseAsc.setOnAction(event -> films.sort(Film.sortByReleaseDate));
+        contextSortReleaseDesc.setOnAction(event -> films.sort(Film.sortByReleaseDate.reversed()));
+        contextSortRuntimeAsc.setOnAction(event -> films.sort(Film.sortByRuntime));
+        contextSortRuntimeDesc.setOnAction(event -> films.sort(Film.sortByRuntime.reversed()));
+
+        // Handles actions involving context menu over tv series listview.
+        contextSortTitleAscTV.setOnAction(event -> series.sort(TVSeries.sortByTitle));
+        contextSortTitleDescTV.setOnAction(event -> series.sort(TVSeries.sortByTitle.reversed()));
+        contextSortDateAscTV.setOnAction(event -> series.sort(TVSeries.sortByReleaseDate));
+        contextSortDateDescTV.setOnAction(event -> series.sort(TVSeries.sortByReleaseDate.reversed()));
+        contextSortEpsAscTV.setOnAction(event -> series.sort(TVSeries.sortByNumberOfEpisodes));
+        contextSortEpsDescTV.setOnAction(event -> series.sort(TVSeries.sortByNumberOfEpisodes.reversed()));
     }
 
     private void filteredSearch() {
@@ -311,41 +331,5 @@ public class FilmOverviewController {
         if(!newSeries.isEmpty()) {
             series.add(newSeries);
         }
-    }
-
-    @FXML
-    private void sortByTitleAscending() {
-        films.sort(Film.sortByTitle);
-        setSelectedContextMenu(contextSortTitleAsc);
-    }
-
-    @FXML
-    private void sortByTitleDescending() {
-        films.sort(Film.sortByTitle.reversed());
-        setSelectedContextMenu(contextSortTitleDesc);
-    }
-
-    @FXML
-    private void sortByReleaseDateAscending() {
-        films.sort(Film.sortByReleaseDate);
-        setSelectedContextMenu(contextSortReleaseAsc);
-    }
-
-    @FXML
-    private void sortByReleaseDateDescending() {
-        films.sort(Film.sortByReleaseDate.reversed());
-        setSelectedContextMenu(contextSortReleaseDesc);
-    }
-
-    @FXML
-    private void sortByRuntimeAscending() {
-        films.sort(Film.sortByRuntime);
-        setSelectedContextMenu(contextSortRuntimeAsc);
-    }
-
-    @FXML
-    private void sortByRuntimeDescending() {
-        films.sort(Film.sortByRuntime.reversed());
-        setSelectedContextMenu(contextSortRuntimeDesc);
     }
 }

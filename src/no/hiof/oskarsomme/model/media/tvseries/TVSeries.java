@@ -240,6 +240,13 @@ public class TVSeries implements Comparable<TVSeries>{
         return this.getTitle().compareToIgnoreCase(o.getTitle());
     }
 
+    public static Comparator<TVSeries> sortByTitle = new Comparator<TVSeries>() {
+        @Override
+        public int compare(TVSeries o1, TVSeries o2) {
+            return o1.getTitle().compareToIgnoreCase(o2.getTitle());
+        }
+    };
+
     public static Comparator<TVSeries> sortByReleaseDate = Comparator.comparing(TVSeries::getReleaseDate);
 
     public static Comparator<TVSeries> sortByNumberOfEpisodes = Comparator.comparingInt(TVSeries::getNumberOfEpisodes);
