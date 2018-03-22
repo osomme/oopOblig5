@@ -1,5 +1,7 @@
 package no.hiof.oskarsomme.model.media.tvseries;
 
+import no.hiof.oskarsomme.MainJavaFX;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,9 +29,17 @@ public class EpisodeGenerator {
     public void generateEpisodes(TVSeries series, int numberOfEpisodes, int seasons) {
         int episodesPerSeason = numberOfEpisodes / seasons;
 
+        //LocalDate airDate = LocalDate.of(2003, 5, 19);
+
         for(int i = 1; i <= seasons; i++) {
             for(int j = 1; j <= episodesPerSeason; j++) {
+
+
+                //MainJavaFX.db.addEpisode(new Episode(j, i, randomEpisodeName(), airDate, (rng.nextInt(30)+21)), series);
+                //airDate = airDate.plusDays(7);
+
                 series.addEpisode(new Episode(j, i, randomEpisodeName()));
+
             }
         }
     }
@@ -57,6 +67,10 @@ public class EpisodeGenerator {
 
             // Checks to see if current day is a saturday or sunday. If not: add episode.
             if(!(airDate.getDayOfWeek().getValue() == 6 || airDate.getDayOfWeek().getValue() == 7)) {
+
+                //MainJavaFX.db.addEpisode(new Episode(episode, season, randomEpisodeName(), airDate, (rng.nextInt(30)+20)), series);
+
+
                 series.addEpisode(new Episode(episode, season, randomEpisodeName(), airDate));
                 i++;
                 episode++;

@@ -6,37 +6,37 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import no.hiof.oskarsomme.controller.FilmEditController;
 import no.hiof.oskarsomme.controller.FilmOverviewController;
-import no.hiof.oskarsomme.datamanagement.Datamanagement;
+import no.hiof.oskarsomme.datamanagement.MediaDatabaseManager;
 import no.hiof.oskarsomme.model.media.film.Film;
+import no.hiof.oskarsomme.model.media.tvseries.EpisodeGenerator;
 import no.hiof.oskarsomme.model.media.tvseries.TVSeries;
+import no.hiof.oskarsomme.model.windowlauncher.WindowLauncher;
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class MainJavaFX extends Application {
     private ObservableList<Film> films = FXCollections.observableArrayList();
     private ObservableList<TVSeries> tvSeries = FXCollections.observableArrayList();
-    private Stage primaryStage;
-    private FilmOverviewController filmOverviewController;
+    public static Stage stage;
+    public static MediaDatabaseManager db;
 
     public MainJavaFX() {
-        Datamanagement.loadFromJson("films.json");
+        //Datamanagement.loadFilmsFromJSON("src/no/hiof/oskarsomme/data/films.json");
 
-        TVSeries doul = new TVSeries("Days of Our Lives", "A " +
-                "chronicle of the lives, loves, trials and tribulations of " +
-                "the citizens of the fictional city of Salem.", LocalDate.of(1965, 11, 8));
-        TVSeries arrestedDevelopment = new TVSeries("Arrested Development", "Level-headed" +
-                " son Michael Bluth takes over family affairs after his father is imprisoned." +
-                " But the rest of his spoiled, dysfunctional family are" +
-                " making his job unbearable.", LocalDate.of(2003, 1, 1), "http://tvmedia.ign.com/tv/image/object/824/824061/arresteddevelopment_box2.jpg");
+        try {
+            db = new MediaDatabaseManager(DriverManager.getConnection("jdbc:sqlite:src/no/hiof/oskarsomme/data/media.db"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        db.loadFilms();
+        db.loadTVSeries();
 
-        tvSeries.addAll(doul, arrestedDevelopment);
-
-        films.addAll(Film.LIST_OF_FILMS);
+        tvSeries.addAll(TVSeries.listOfTVseries);
+        films.addAll(Film.listOfFilms);
     }
 
     public static void main(String[] args) {
@@ -45,14 +45,15 @@ public class MainJavaFX extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+        stage = primaryStage;
 
         goToFilmListing();
     }
 
     @Override
     public void stop() {
-        Datamanagement.saveToJson("films.json", films);
+        //Datamanagement.saveFilmsToJSON("src/no/hiof/oskarsomme/data/films.json", films);
+        db.disconnect();
     }
 
     private void goToFilmListing() {
@@ -61,52 +62,20 @@ public class MainJavaFX extends Application {
             loader.setLocation(getClass().getResource("view/FilmOverview.fxml"));
             Parent root = loader.load();
 
-            filmOverviewController = loader.getController();
+            FilmOverviewController filmOverviewController = loader.getController();
             filmOverviewController.setMain(this);
 
             Scene primaryScene = new Scene(root);
 
-            primaryStage.setTitle("Filmer");
+            stage.setTitle("Filmer");
 
-            primaryStage.setMinHeight(500);
-            primaryStage.setMinWidth(500);
-            primaryStage.setScene(primaryScene);
-            primaryStage.show();
+            stage.setMinHeight(500);
+            stage.setMinWidth(500);
+            stage.setScene(primaryScene);
+            stage.show();
         } catch (Exception e) {
             e.printStackTrace();
-            fxmlLoadingErrorBox(e);
-        }
-    }
-
-    public void goToEditDialog(Film film) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("view/PopupMenu.fxml"));
-
-            Parent root = loader.load();
-
-            Stage editMenu = new Stage();
-            editMenu.setTitle("Edit film");
-            editMenu.initModality(Modality.WINDOW_MODAL);
-            editMenu.initOwner(primaryStage);
-
-            Scene editScene = new Scene(root);
-            editMenu.setScene(editScene);
-
-            FilmEditController fec = loader.getController();
-            fec.setStage(editMenu);
-            fec.setFilm(film);
-            editMenu.showAndWait();
-
-            /* After dialogbox is closed: */
-
-            // Updates info in FilmOverview.
-            filmOverviewController.setInfoListing(film);
-            // Forces a refresh of the list in FilmOverview.
-            filmOverviewController.getFilmListView().refresh();
-        } catch (Exception e) {
-            e.printStackTrace();
-            fxmlLoadingErrorBox(e);
+            WindowLauncher.fxmlLoadingErrorBox(e);
         }
     }
 
@@ -116,21 +85,5 @@ public class MainJavaFX extends Application {
 
     public ObservableList<TVSeries> getTVSeries() {
         return tvSeries;
-    }
-
-    public void addFilm() {
-        Film newFilm = new Film();
-        goToEditDialog(newFilm);
-        if(!newFilm.isEmpty()) {
-            films.add(newFilm);
-        }
-    }
-
-    private void fxmlLoadingErrorBox(Exception e) {
-        Alert errorBox = new Alert(Alert.AlertType.ERROR);
-        errorBox.setTitle("Something went wrong...");
-        errorBox.setHeaderText(null);
-        errorBox.setContentText(e.getMessage());
-        errorBox.showAndWait();
     }
 }

@@ -10,26 +10,40 @@ public class TVSeries implements Comparable<TVSeries>{
     private String description;
     private LocalDate releaseDate;
     private String posterURL;
+    private int id;
+
+
     private List<Episode> episodeList;
     private int averageRunningTime;
     private int numberOfSeasons;
-    public static List<TVSeries> LIST_OF_TVSERIES = new ArrayList<>();
+    public static List<TVSeries> listOfTVseries = new ArrayList<>();
 
-    public TVSeries(String title, String description, LocalDate releaseDate) {
+    public TVSeries(String title, String description, LocalDate releaseDate, String posterURL, int id) {
         this.title = title;
         this.description = description;
         this.releaseDate = releaseDate;
+        this.posterURL = posterURL;
+        this.id = id;
         this.episodeList = new ArrayList<>();
         this.averageRunningTime = 0;
         this.numberOfSeasons = 0;
-        LIST_OF_TVSERIES.add(this);
+        listOfTVseries.add(this);
     }
 
     public TVSeries(String title, String description, LocalDate releaseDate, String posterURL) {
-        this(title, description, releaseDate);
-        this.posterURL = posterURL;
+        this(title, description, releaseDate, posterURL, 0);
     }
 
+    public TVSeries(String title, String description, LocalDate releaseDate) {
+        this(title, description, releaseDate, null, 0);
+    }
+
+
+    public TVSeries() {
+        this(null, null, null, null, 0);
+    }
+
+    /*
     public void addEpisode(Episode episode) {
         if(episode.getSeason() == this.numberOfSeasons) {
             this.episodeList.add(episode);
@@ -46,11 +60,20 @@ public class TVSeries implements Comparable<TVSeries>{
                     " to " + episode.getSeason());
         }
     }
+    */
+
+    public void addEpisode(Episode episode) {
+        episodeList.add(episode);
+    }
 
     public void printEpisodes() {
         for(Episode episode : episodeList) {
             System.out.println(episode);
         }
+    }
+
+    public List<Episode> getEpisodes() {
+        return episodeList;
     }
 
     public int getAverageRunningTime() {
@@ -184,10 +207,42 @@ public class TVSeries implements Comparable<TVSeries>{
         }
     }
 
+    public boolean isEmpty() {
+        return title == null && releaseDate == null && description == null;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public void setPosterURL(String posterURL) {
+        this.posterURL = posterURL;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public int compareTo(TVSeries o) {
         return this.getTitle().compareToIgnoreCase(o.getTitle());
     }
+
+    public static Comparator<TVSeries> sortByReleaseDate = Comparator.comparing(TVSeries::getReleaseDate);
+
+    public static Comparator<TVSeries> sortByNumberOfEpisodes = Comparator.comparingInt(TVSeries::getNumberOfEpisodes);
 
     @Override
     public String toString() {

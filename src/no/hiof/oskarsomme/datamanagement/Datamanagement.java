@@ -6,10 +6,12 @@ import javafx.scene.control.Alert;
 import no.hiof.oskarsomme.model.media.film.Film;
 
 import java.io.*;
+import java.sql.*;
+import java.time.LocalDate;
 
 public class Datamanagement {
 
-    public static void loadFromJson(String filePath) {
+    public static void loadFilmsFromJSON(String filePath) {
         Gson gson = new Gson();
         File file = new File(filePath);
 
@@ -17,15 +19,11 @@ public class Datamanagement {
             String jsonString = reader.readLine();
             gson.fromJson(jsonString, Film[].class);
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setTitle("Error");
-            alert.setContentText("Data could not be loaded");
-            alert.showAndWait();
+            errorBox("Data could not be loaded");
         }
     }
 
-    public static void saveToJson(String filePath, ObservableList<Film> list) {
+    public static void saveFilmsToJSON(String filePath, ObservableList<Film> list) {
         Gson gson = new Gson();
         File outputFile = new File(filePath);
 
@@ -33,11 +31,15 @@ public class Datamanagement {
             String filmToJson = gson.toJson(list);
             writer.write(filmToJson);
         } catch (Exception e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setTitle("Error");
-            alert.setContentText("Data could not be saved");
-            alert.showAndWait();
+            errorBox("Data could not be saved");
         }
+    }
+
+    private static void errorBox(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle("Error");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

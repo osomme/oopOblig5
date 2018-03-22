@@ -3,7 +3,7 @@ label {
 }
 
 AnchorPane {
-    -fx-background-color: #333;
+    -fx-background-color: #3c3c3c;
 }
 
 .inputField:hover {
@@ -17,9 +17,15 @@ AnchorPane {
 
 .btn {
     -fx-border-color: #ffffff;
-    -fx-background-color: #333;
-    -fx-border-radius: 2;
+    -fx-background-color: #3c3c3c;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
     -fx-border-width: 2;
+    -fx-text-fill: #96b946;
+}
+
+#btnDelete {
+    -fx-border-color: #ff401d;
 }
 
 .btn:hover {
@@ -27,6 +33,6 @@ AnchorPane {
 }
 
 .btn:pressed {
-    -fx-pref-height: 10;
+    -fx-pref-height: 15;
     -fx-border-color: orange;
 }

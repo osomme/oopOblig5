@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="300.0" minWidth="500.0" prefHeight="400.0" prefWidth="820.0" style="-fx-background-color: #333;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.hiof.oskarsomme.controller.FilmOverviewController">
+<AnchorPane minHeight="300.0" minWidth="500.0" prefHeight="450.0" prefWidth="1000.0" style="-fx-background-color: #3c3c3c;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.hiof.oskarsomme.controller.FilmOverviewController">
    <children>
       <GridPane layoutX="200.0" layoutY="155.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -34,7 +34,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-         <Label alignment="CENTER" prefHeight="17.0" prefWidth="338.0" text="Films" textFill="WHITE">
+         <Label alignment="CENTER" prefHeight="17.0" prefWidth="338.0" text="Films &amp; TV series" textFill="WHITE">
             <font>
                <Font size="17.0" />
             </font>
@@ -69,7 +69,7 @@
                      <Font name="System Bold Italic" size="14.0" />
                   </font>
                </Label>
-               <Label fx:id="description" alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="145.0" prefWidth="332.0" text="DescriptionPlaceHolder" textFill="WHITE" wrapText="true" />
+               <Label fx:id="description" alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="211.0" prefWidth="323.0" text="DescriptionPlaceHolder" textFill="WHITE" wrapText="true" />
             </children>
             <padding>
                <Insets left="5.0" right="5.0" />
@@ -77,12 +77,21 @@
          </VBox>
          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="35.0" GridPane.rowIndex="3">
             <children>
-               <Button fx:id="btnNew" mnemonicParsing="false" styleClass="btn" text="New" textFill="WHITE" />
-               <Button fx:id="btnEdit" mnemonicParsing="false" styleClass="btn" text="Edit" textFill="WHITE" />
-               <Button fx:id="btnDelete" mnemonicParsing="false" styleClass="btn" text="Delete" textFill="WHITE" />
+               <Button fx:id="btnNew" mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" styleClass="btn" text="New" textFill="WHITE">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+               <Button fx:id="btnEdit" mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" styleClass="btn" text="Edit" textFill="WHITE">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+               <Button id="btnDelete" fx:id="btnDelete" mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" styleClass="btn" text="Delete" textFill="WHITE">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
             </children>
          </HBox>
-         <ImageView fx:id="poster" fitHeight="331.0" fitWidth="264.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+         <ImageView fx:id="poster" fitHeight="365.0" fitWidth="283.0" pickOnBounds="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
             <GridPane.margin>
                <Insets />
             </GridPane.margin>
@@ -92,11 +101,11 @@
                <Insets left="25.0" right="25.0" />
             </GridPane.margin>
          </TextField>
-         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.rowIndex="1" GridPane.rowSpan="2">
+         <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.rowIndex="1" GridPane.rowSpan="2">
            <tabs>
              <Tab text="Films">
                   <content>
-                        <ListView fx:id="filmList" onKeyPressed="#getInfo" onMouseClicked="#getInfo" prefHeight="370.0" prefWidth="300.0">
+                        <ListView fx:id="filmList" prefHeight="370.0" prefWidth="300.0">
                         <cursor>
                            <Cursor fx:constant="HAND" />
                         </cursor>
@@ -117,7 +126,7 @@
                </Tab>
              <Tab text="TV Series">
                   <content>
-                     <ListView fx:id="tvSeriesList" prefHeight="200.0" prefWidth="200.0" />
+                     <ListView fx:id="tvSeriesList" prefHeight="200.0" prefWidth="324.0" />
                   </content></Tab>
            </tabs>
             <GridPane.margin>
@@ -127,6 +136,6 @@
       </GridPane>
    </children>
     <stylesheets>
-        <URL value="@filmoverview.css" />
+        <URL value="@stylesheets/filmoverview.css" />
     </stylesheets>
 </AnchorPane>

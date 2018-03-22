@@ -10,12 +10,14 @@ import java.util.List;
 public abstract class Production {
     private String title;
     private String description;
+    private String posterURL;
     private int runningTime;
+    private int id;
     private LocalDate releaseDate;
     private Person director;
     private List<Role> roles = new ArrayList<>();
 
-    protected  Production(String title, String description,
+    protected Production(String title, String description,
                           int runningTime, LocalDate releaseDate, Person director) {
         this.title = title;
         this.description = description;
@@ -24,28 +26,51 @@ public abstract class Production {
         this.director = director;
     }
 
-    protected  Production(String title, int runningTime, LocalDate releaseDate, Person director) {
+    protected Production(String title, int runningTime, LocalDate releaseDate, Person director) {
         this.title = title;
         this.runningTime = runningTime;
         this.releaseDate = releaseDate;
         this.director = director;
     }
 
-    protected  Production(String title, String description,
-                          int runningTime, LocalDate releaseDate) {
+    protected Production(String title, String description, int runningTime, LocalDate releaseDate, String posterURL, int id) {
+        this.title = title;
+        this.description = description;
+        this.runningTime = runningTime;
+        this.releaseDate = releaseDate;
+        this.posterURL = posterURL;
+        this.id = id;
+    }
+
+    protected Production(String title, String description, int runningTime, LocalDate releaseDate, String posterURL) {
+        this.title = title;
+        this.description = description;
+        this.runningTime = runningTime;
+        this.releaseDate = releaseDate;
+        this.posterURL = posterURL;
+    }
+
+    protected Production(String title, String description, int runningTime, LocalDate releaseDate) {
         this.title = title;
         this.description = description;
         this.runningTime = runningTime;
         this.releaseDate = releaseDate;
     }
 
-    protected  Production(String title, int runningTime, LocalDate releaseDate) {
+    protected Production(String title, int runningTime, LocalDate releaseDate, int id) {
+        this.title = title;
+        this.runningTime = runningTime;
+        this.releaseDate = releaseDate;
+        this.id = id;
+    }
+
+    protected Production(String title, int runningTime, LocalDate releaseDate) {
         this.title = title;
         this.runningTime = runningTime;
         this.releaseDate = releaseDate;
     }
 
-    protected  Production(String title, String description, int runningTime) {
+    protected Production(String title, String description, int runningTime) {
         this.title = title;
         this.description = description;
         this.runningTime = runningTime;
@@ -122,8 +147,32 @@ public abstract class Production {
         return roles;
     }
 
+    public String getPosterURL() {
+        if(posterURL != null) {
+            return posterURL;
+        }
+
+        return "";
+    }
+
+    public void setPosterURL(String posterURL) {
+        this.posterURL = posterURL;
+    }
+
     public void setRoles(ArrayList<Role> roles) {
         this.roles = roles;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isEmpty() {
+        return title == null && releaseDate == null && description == null;
     }
 
     @Override

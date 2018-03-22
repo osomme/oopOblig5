@@ -1,0 +1,95 @@
+.btn {
+    -fx-border-color: #ffffff;
+    -fx-background-color: #3c3c3c;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-width: 2;
+    -fx-text-fill: #96b946;
+}
+
+#btnDelete {
+    -fx-border-color: #ff401d;
+}
+
+.btn:hover {
+    -fx-background-color: #616161;
+}
+
+.btn:pressed {
+    -fx-pref-height: 15;
+    -fx-border-color: orange;
+}
+
+.list-view {
+    -fx-background-color: #3c3c3c;
+}
+
+.list-view .list-cell {
+    -fx-background-color: #3c3c3c;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #5472e6;
+    -fx-text-fill: white;
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #284ee6;
+}
+
+/*
+.list-view .list-cell:even {
+    -fx-background-color: #3c3619;
+}
+*/
+
+.list-cell {
+    -fx-font-size: 20px;
+    -fx-text-fill: #96b946;
+}
+
+.label {
+    -fx-font-size: 17px;
+    -fx-text-fill: #96b946;
+}
+
+.film-info-category {
+    -fx-font-style: italic;
+    -fx-underline: true;
+    -fx-text-fill: white;
+}
+
+#sortInput:hover {
+    -fx-background-color: #e6e6e6;
+}
+
+#sortInput:focused {
+    -fx-border-width: 3;
+    -fx-border-color: orange;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
+.tab-pane {
+    -fx-tab-min-width: 142px;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #e6e6e6;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #3c3c3c;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #96b946;
+}
+
+.tab:selected .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #3c3c3c;
+}

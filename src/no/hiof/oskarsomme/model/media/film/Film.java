@@ -9,47 +9,38 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Film extends Production implements Comparable<Film>{
-    public static List<Film> LIST_OF_FILMS = new ArrayList<>();
-    private String imageURL;
+    public static List<Film> listOfFilms = new ArrayList<>();
 
     public Film(String title, String description, int runningTime,
                 LocalDate releaseDate, Person director) {
         super(title, description, runningTime, releaseDate, director);
-        LIST_OF_FILMS.add(this);
+        listOfFilms.add(this);
     }
 
     public Film(String title, String description, int runningTime,
                 LocalDate releaseDate) {
         super(title, description, runningTime, releaseDate);
-        LIST_OF_FILMS.add(this);
+        listOfFilms.add(this);
     }
 
     public Film(String title, String description, int runningTime) {
         super(title, description, runningTime);
-        LIST_OF_FILMS.add(this);
+        listOfFilms.add(this);
     }
 
     public Film(String title, String description, int runningTime, LocalDate releaseDate, String imageURL) {
-        super(title, description, runningTime, releaseDate);
-        this.imageURL = imageURL;
-        LIST_OF_FILMS.add(this);
+        super(title, description, runningTime, releaseDate, imageURL);
+        listOfFilms.add(this);
+    }
+
+    public Film(String title, String description, int runningTime, LocalDate releaseDate, String imageURL, int id) {
+        super(title, description, runningTime, releaseDate, imageURL, id);
+        listOfFilms.add(this);
     }
 
     public Film() {
         super();
-        LIST_OF_FILMS.add(this);
-    }
-
-    public String getImageURL() {
-        if(imageURL != null) {
-            return imageURL;
-        }
-
-        return "";
-    }
-
-    public boolean isEmpty() {
-        return getTitle() == null && getReleaseDate() == null && getDescription() == null;
+        listOfFilms.add(this);
     }
 
     @Override
@@ -75,6 +66,13 @@ public class Film extends Production implements Comparable<Film>{
         @Override
         public int compare(Film o1, Film o2) {
             return o1.getRunningTime() - o2.getRunningTime();
+        }
+    };
+
+    public static Comparator<Film> sortByTitle = new Comparator<Film>() {
+        @Override
+        public int compare(Film o1, Film o2) {
+            return o1.getTitle().compareToIgnoreCase(o2.getTitle());
         }
     };
 
