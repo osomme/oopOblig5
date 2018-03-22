@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="400.0" maxWidth="500.0" minHeight="400.0" minWidth="500.0" prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.hiof.oskarsomme.controller.EpisodeListController">
+   <children>
+      <GridPane layoutX="200.0" layoutY="155.0" maxHeight="400.0" maxWidth="500.0" minHeight="400.0" minWidth="500.0" style="-fx-background-color: #3c3c3c;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="326.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="342.0" minHeight="10.0" prefHeight="314.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="49.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="header" alignment="CENTER" prefHeight="27.0" prefWidth="647.0" text="Placeholder text" GridPane.columnSpan="3">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TableView fx:id="episodeTable" GridPane.columnSpan="3" GridPane.rowIndex="1">
+               <columns>
+                  <TableColumn fx:id="columnTitle" editable="false" prefWidth="140.0" resizable="false" text="Title" />
+                  <TableColumn fx:id="columnSeason" editable="false" prefWidth="75.0" resizable="false" text="Season" />
+                  <TableColumn fx:id="columnEpisode" editable="false" prefWidth="75.0" resizable="false" text="Episode" />
+                  <TableColumn fx:id="columnAirdate" editable="false" prefWidth="110.0" resizable="false" text="Airdate" />
+                  <TableColumn fx:id="columnRuntime" prefWidth="79.0" resizable="false" text="Runtime" />
+               </columns>
+               <GridPane.margin>
+                  <Insets left="10.0" right="10.0" />
+               </GridPane.margin>
+            </TableView>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnSpan="3" GridPane.rowIndex="2">
+               <children>
+                  <Button fx:id="btnNew" alignment="CENTER" mnemonicParsing="false" text="New" />
+                  <Button fx:id="btnEdit" mnemonicParsing="false" text="Edit" />
+                  <Button fx:id="btnDelete" mnemonicParsing="false" text="Delete" />
+               </children>
+               <padding>
+                  <Insets left="166.0" top="10.0" />
+               </padding>
+            </HBox>
+         </children>
+      </GridPane>
+   </children>
+    <stylesheets>
+        <URL value="@stylesheets/episodelist.css" />
+    </stylesheets>
+</AnchorPane>
